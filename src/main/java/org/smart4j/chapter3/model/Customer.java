@@ -114,4 +114,20 @@ public class Customer {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    /**
+     * 获取备注信息
+     * @return email
+     */
+    public String getRemark() {
+        return remark;
+    }
+
+    /**
+     * 设置备注信息
+     * @param remark
+     */
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }
