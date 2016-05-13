@@ -1,5 +1,6 @@
 package org.smart4j.chapter3.service;
 
+import javafx.scene.chart.PieChart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smart4j.chapter3.helper.DatabaseHelper;
@@ -25,34 +26,14 @@ public class CustomerService {
      * @return
      */
     public List<Customer> getCustomerList() {
-        Connection connection = null;
+        Connection connection = DatabaseHelper.getConnection();
 
         try {
-            List<Customer> customers = new ArrayList<Customer>();
-
             String sql = "select * from customer";
-            connection = DatabaseHelper.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Customer customer = new Customer();
-                customer.setId(resultSet.getLong("id"));
-                customer.setName(resultSet.getString("name"));
-                customer.setContact(resultSet.getString("contact"));
-                customer.setTelephone(resultSet.getString("telephone"));
-                customer.setEmail(resultSet.getString("email"));
-                customer.setRemark(resultSet.getString("remark"));
-                customers.add(customer);
-            }
-
-            return customers;
-        } catch (SQLException e) {
-            logger.error("execute sql failure." + e);
+            return DatabaseHelper.queryEntityList(connection, Customer.class, sql);
         } finally {
             DatabaseHelper.closeConnection(connection);
         }
-
-        return null;
     }
 
     /**
