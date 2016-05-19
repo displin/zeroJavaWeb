@@ -26,14 +26,8 @@ public class CustomerService {
      * @return
      */
     public List<Customer> getCustomerList() {
-        Connection connection = DatabaseHelper.getConnection();
-
-        try {
-            String sql = "select * from customer";
-            return DatabaseHelper.queryEntityList(connection, Customer.class, sql);
-        } finally {
-            DatabaseHelper.closeConnection(connection);
-        }
+        String sql = "select * from customer";
+        return DatabaseHelper.queryEntityList(Customer.class, sql);
     }
 
     /**
@@ -51,7 +45,7 @@ public class CustomerService {
      * @return
      */
     public boolean createCustomer(Map<String, Object> fieldMap) {
-        return false;
+        return DatabaseHelper.insertEntity(Customer.class, fieldMap);
     }
 
     /**
@@ -61,7 +55,7 @@ public class CustomerService {
      * @return
      */
     public boolean updateCustomer(long id, Map<String, Object> fieldMap) {
-        return false;
+        return DatabaseHelper.updateEntity(Customer.class, id, fieldMap);
     }
 
     /**
@@ -70,6 +64,6 @@ public class CustomerService {
      * @return
      */
     public boolean deleteCustomer(long id) {
-        return false;
+        return DatabaseHelper.deleteEntity(Customer.class, id);
     }
 }
